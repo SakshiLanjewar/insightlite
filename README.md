@@ -1,7 +1,28 @@
 # 📊 InsightLite — MERN Stack Analytics Dashboard
 
-A clean, modern, full-stack analytics dashboard built with **MongoDB, Express.js, React.js, and Node.js**.  
-Perfect for a B.Tech portfolio project!
+![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white&style=flat-square)
+![Node.js](https://img.shields.io/badge/Node.js-18-339933?logo=node.js&logoColor=white&style=flat-square)
+![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?logo=mongodb&logoColor=white&style=flat-square)
+![Express](https://img.shields.io/badge/Express.js-4-000000?logo=express&logoColor=white&style=flat-square)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3-06B6D4?logo=tailwindcss&logoColor=white&style=flat-square)
+![JWT](https://img.shields.io/badge/Auth-JWT-orange?style=flat-square)
+![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)
+
+> Built to learn full-stack development end-to-end — covers JWT authentication, REST APIs, data visualization, and responsive UI in one complete project.
+
+🔗 **Live Demo:** _Coming soon (deploying on Vercel + Render)_
+
+---
+
+## 📸 Screenshots
+
+| Dashboard (Light Mode) | Dashboard (Dark Mode) |
+|---|---|
+| ![Light Mode](./assets/dashboard-light.png) | ![Dark Mode](./assets/dashboard-dark.png) |
+
+| Login Page | Profile Page |
+|---|---|
+| ![Login](./assets/login.png) | ![Profile](./assets/profile.png) |
 
 ---
 
@@ -13,10 +34,30 @@ Perfect for a B.Tech portfolio project!
 | 📊 Summary Cards | Total Users, Sales, Revenue, Orders |
 | 📈 Bar Chart | Monthly sales & orders (Recharts) |
 | 🥧 Pie Chart | Activity category breakdown |
-| 📋 Activity Table | Recent events with live search |
+| 📋 Activity Table | Recent events with live debounced search |
 | 👤 Profile Page | View & edit user info |
 | 🌙 Dark Mode | System-aware dark/light toggle |
 | 📱 Responsive | Mobile + desktop layout |
+
+---
+
+## 🛠️ Tech Stack
+
+**Frontend**
+- React 18 + Vite
+- Tailwind CSS (styling)
+- Recharts (charts)
+- Axios (API calls)
+- React Router v6 (navigation)
+
+**Backend**
+- Node.js + Express.js
+- Mongoose (MongoDB ODM)
+- JSON Web Tokens (auth)
+- bcryptjs (password hashing)
+
+**Database**
+- MongoDB (3 collections: `users`, `analytics`, `activities`)
 
 ---
 
@@ -24,15 +65,20 @@ Perfect for a B.Tech portfolio project!
 
 ```
 insightlite/
+├── assets/                       # Screenshots for README
+│   ├── dashboard-light.png
+│   ├── dashboard-dark.png
+│   ├── login.png
+│   └── profile.png
 ├── backend/
 │   ├── config/
-│   │   └── seed.js          # Database seeder
+│   │   └── seed.js               # Database seeder (demo data)
 │   ├── controllers/
-│   │   ├── authController.js
-│   │   ├── analyticsController.js
-│   │   └── userController.js
+│   │   ├── authController.js     # Register, login, get user
+│   │   ├── analyticsController.js # Charts & summary data
+│   │   └── userController.js     # Profile update
 │   ├── middleware/
-│   │   └── authMiddleware.js  # JWT protection
+│   │   └── authMiddleware.js     # JWT route protection
 │   ├── models/
 │   │   ├── User.js
 │   │   ├── Analytics.js
@@ -48,15 +94,15 @@ insightlite/
 └── frontend/
     ├── src/
     │   ├── components/
-    │   │   ├── ActivityTable.jsx
+    │   │   ├── ActivityTable.jsx  # Table with search
     │   │   ├── CategoryPieChart.jsx
     │   │   ├── Navbar.jsx
-    │   │   ├── PrivateRoute.jsx
+    │   │   ├── PrivateRoute.jsx   # Auth guard
     │   │   ├── SalesBarChart.jsx
     │   │   └── StatCard.jsx
     │   ├── context/
-    │   │   ├── AuthContext.jsx
-    │   │   └── ThemeContext.jsx
+    │   │   ├── AuthContext.jsx    # Global auth state
+    │   │   └── ThemeContext.jsx   # Dark/light mode
     │   ├── pages/
     │   │   ├── Dashboard.jsx
     │   │   ├── Login.jsx
@@ -64,7 +110,7 @@ insightlite/
     │   │   ├── Profile.jsx
     │   │   └── Register.jsx
     │   ├── utils/
-    │   │   ├── api.js
+    │   │   ├── api.js             # Axios instance with interceptor
     │   │   └── helpers.js
     │   ├── App.jsx
     │   ├── index.css
@@ -81,7 +127,7 @@ insightlite/
 
 ### Prerequisites
 - Node.js v18+
-- MongoDB (local install or [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) free tier)
+- MongoDB (local or [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) free tier)
 - npm
 
 ---
@@ -97,21 +143,18 @@ cd insightlite
 
 ```bash
 cd backend
-
-# Install dependencies
 npm install
-
-# Create your .env file
 cp .env.example .env
 ```
 
-Open `.env` and set your values:
-```env
-PORT=5000
-MONGO_URI=mongodb://localhost:27017/insightlite
-JWT_SECRET=change_this_to_a_long_random_string
-JWT_EXPIRE=7d
-```
+Open `.env` and fill in your values:
+
+| Variable | Description | Example |
+|---|---|---|
+| `PORT` | Backend server port | `5000` |
+| `MONGO_URI` | MongoDB connection string | `mongodb://localhost:27017/insightlite` |
+| `JWT_SECRET` | Secret key for signing tokens | `any_long_random_string` |
+| `JWT_EXPIRE` | Token expiry duration | `7d` |
 
 > 💡 For MongoDB Atlas, replace `MONGO_URI` with your Atlas connection string.
 
@@ -144,7 +187,7 @@ npm run dev
 
 Backend runs at: `http://localhost:5000`
 
-Test it: `http://localhost:5000/api/health` → should return `{"status":"OK"}`
+✅ Test it: `http://localhost:5000/api/health` → should return `{"status":"OK"}`
 
 ---
 
@@ -154,11 +197,7 @@ Open a new terminal:
 
 ```bash
 cd frontend
-
-# Install dependencies
 npm install
-
-# Start dev server
 npm run dev
 ```
 
@@ -172,7 +211,7 @@ Frontend runs at: `http://localhost:5173`
 | Method | Endpoint | Access | Description |
 |---|---|---|---|
 | POST | `/api/auth/register` | Public | Create account |
-| POST | `/api/auth/login` | Public | Login |
+| POST | `/api/auth/login` | Public | Login & get token |
 | GET | `/api/auth/me` | Private | Get current user |
 
 ### Analytics
@@ -181,33 +220,13 @@ Frontend runs at: `http://localhost:5173`
 | GET | `/api/analytics/summary` | Private | Stats cards data |
 | GET | `/api/analytics/chart` | Private | Bar chart data |
 | GET | `/api/analytics/pie` | Private | Pie chart data |
-| GET | `/api/analytics/activities?search=` | Private | Activity table |
+| GET | `/api/analytics/activities?search=` | Private | Activity table with search |
 
 ### Users
 | Method | Endpoint | Access | Description |
 |---|---|---|---|
 | GET | `/api/users` | Private | All users |
 | PUT | `/api/users/profile` | Private | Update profile |
-
----
-
-## 🛠️ Tech Stack
-
-**Frontend**
-- React 18 + Vite
-- Tailwind CSS (styling)
-- Recharts (charts)
-- Axios (API calls)
-- React Router v6 (navigation)
-
-**Backend**
-- Node.js + Express.js
-- Mongoose (MongoDB ODM)
-- JSON Web Tokens (auth)
-- bcryptjs (password hashing)
-
-**Database**
-- MongoDB (3 collections: users, analytics, activities)
 
 ---
 
@@ -220,14 +239,25 @@ Frontend runs at: `http://localhost:5173`
 
 ---
 
-## 👨‍💻 For Your Portfolio
+## 💡 What I Learned
+
+- How JWT authentication works end-to-end (token generation → storage → protected routes)
+- Building reusable React components with Context API (no Redux needed)
+- Connecting a React frontend to an Express backend with Axios interceptors
+- Designing REST APIs with proper route protection using middleware
+- Implementing debounced search to reduce unnecessary API calls
+- Making a responsive UI with Tailwind CSS dark mode support
+
+---
+
+## 👨‍💻 For Your Portfolio / Interviewers
 
 Key things to highlight:
-- **JWT authentication flow** — token stored in localStorage, sent via Axios interceptor
-- **Protected routes** — `PrivateRoute` component wraps dashboard pages
+- **JWT authentication flow** — token stored in localStorage, sent via Axios interceptor on every request
+- **Protected routes** — `PrivateRoute` component wraps dashboard pages, redirects if not logged in
 - **Context API** — Global auth + theme state without Redux
-- **Debounced search** — Activity search waits 400ms before API call
-- **Responsive design** — Works on mobile and desktop
+- **Debounced search** — Activity search waits 400ms before making API call (performance optimization)
+- **Responsive design** — Works on mobile and desktop with Tailwind CSS
 
 ---
 
@@ -235,13 +265,19 @@ Key things to highlight:
 
 **MongoDB connection error?**
 - Make sure MongoDB service is running: `sudo systemctl start mongod` (Linux)
-- On Windows: check MongoDB in Services
+- On Windows: check MongoDB in Services panel
 
 **CORS error?**
-- Make sure backend is running on port 5000 and frontend on 5173
+- Make sure backend is running on port `5000` and frontend on `5173`
 
 **"Cannot find module"?**
-- Run `npm install` inside both `/backend` and `/frontend` folders
+- Run `npm install` inside both `/backend` and `/frontend` folders separately
+
+---
+
+## 📄 License
+
+This project is open source under the [MIT License](LICENSE).
 
 ---
 
